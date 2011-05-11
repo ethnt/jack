@@ -8,6 +8,9 @@
 
 ### Changelog
 
+#### 11 May 2011
+*  Finished POST requests (now parameters work!)
+
 #### 10 May 2011
 
 *  Initial commit.
