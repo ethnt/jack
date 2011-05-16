@@ -8,6 +8,10 @@
 
 ### Changelog
 
+#### 16 May 2011
+*  Now the correct file structure for a package.
+*  Completed PUT and DELETE requests.
+
 #### 11 May 2011
 *  Finished POST requests (now parameters work!)
 
