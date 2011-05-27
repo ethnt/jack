@@ -1,4 +1,4 @@
- 
+package com.eturk.jack;
 
 /**
  * Jack allows you to make basic HTTP requests.
@@ -6,8 +6,12 @@
  * @author Ethan Turkeltaub
  * @version 0.1.0
  */
+
 import java.net.*;
 import java.io.*;
+import java.util.*;
+
+import com.eturk.jack.*;
 
 public class Jack
 {
@@ -21,22 +25,41 @@ public class Jack
      */
     private String params;
     
+    /*
+     * Temporary instance variables for if the said resource is under basic authentication.
+     */
+    private boolean authenticated;
+    private String username;
+    private String password;
+    
     /**
-     * Constructor for Jack. You don't need to supply anything.
+     * Constructor for Jack. You don't need to supply anything if you're not using basic authentication.
      */
     public Jack()
     {
         params = "";
+        authenticated = false;
     }
     
+    /**
+     * Constructor for Jack. Supply username and password if you're using basic authentication.
+     */
+    public Jack(String user, String pass)
+    {
+        params = "";
+        authenticated = true;
+        username = user;
+        password = pass;
+    }
+     
     /**
      * Make GET requests.
      * 
      * @param   url   The URL you want to make a GET request of.
-     * @return        static
+     * @return        void
      */
     public void get(String url)
-    {   
+    {
         /*
          * If there isn't an exception, make the connection.
          */
@@ -47,6 +70,15 @@ public class Jack
              */
             URL input = new URL(url);
             URLConnection connection = input.openConnection();
+            
+            /*
+             * If protected, authenticate.
+             */
+            if(authenticated)
+            {
+                Authenticator authenticator = new Authenticator(connection, username, password);
+            }
+            
             BufferedReader get = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             
             /*
