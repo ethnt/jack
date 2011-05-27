@@ -8,10 +8,8 @@
 
 ### Quick Walkthrough
 
-``
-Jack jack = new Jack("ethan", "13201"); // Leave empty for no authentication.
-jack.post("http://ethan.turkeltaub.org/jack", { "hello" }); // => POST hello
-``
+  Jack jack = new Jack("ethan", "13201"); // Leave empty for no authentication.
+  jack.post("http://ethan.turkeltaub.org/jack", { "hello" }); // => POST hello
 
 ### Changelog
 
