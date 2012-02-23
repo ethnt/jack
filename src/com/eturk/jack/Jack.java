@@ -1,5 +1,3 @@
-package com.eturk.jack;
-
 /**
  * Jack allows you to make basic HTTP requests.
  * 
@@ -11,23 +9,9 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-import com.eturk.jack.*;
-
-public class Jack
-{
-    /*
-     * Temporary instance variable for the output of a request.
-     */
+public class Jack {
     private String out;
-    
-    /*
-     * Temporary instance variable for the parameters of a POST or PUT request.
-     */
     private String params;
-    
-    /*
-     * Temporary instance variables for if the said resource is under basic authentication.
-     */
     private boolean authenticated;
     private String username;
     private String password;
@@ -35,8 +19,7 @@ public class Jack
     /**
      * Constructor for Jack. You don't need to supply anything if you're not using basic authentication.
      */
-    public Jack()
-    {
+    public Jack() {
         params = "";
         authenticated = false;
     }
@@ -44,8 +27,7 @@ public class Jack
     /**
      * Constructor for Jack. Supply username and password if you're using basic authentication.
      */
-    public Jack(String user, String pass)
-    {
+    public Jack(String user, String pass) {
         params = "";
         authenticated = true;
         username = user;
@@ -58,48 +40,25 @@ public class Jack
      * @param   url   The URL you want to make a GET request of.
      * @return        void
      */
-    public void get(String url)
-    {
-        /*
-         * If there isn't an exception, make the connection.
-         */
-        try
-        {
-            /*
-             * Make the connection (make a URL, open the connection).
-             */
+    public void get(String url) {
+        try {
             URL input = new URL(url);
             URLConnection connection = input.openConnection();
             
-            /*
-             * If protected, authenticate.
-             */
-            if(authenticated)
-            {
+            if(authenticated) {
                 Authenticator authenticator = new Authenticator(connection, username, password);
             }
             
             BufferedReader get = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             
-            /*
-             * Try and print the output.
-             */
-            while((out = get.readLine()) != null)
-            {
+            while((out = get.readLine()) != null) {
                 System.out.println(out);
             }
             
-            /*
-             * Close the connection.
-             */
             get.close();
         }
         
-        /*
-         * If there is an exception, print the error.
-         */
-        catch(Exception e)
-        {
+        catch(Exception e) {
             e.printStackTrace();
         }
     }
@@ -112,61 +71,32 @@ public class Jack
      *                       "height=50". This will send "width=50&height=50".
      * @return               
      */
-    public void post(String url, String[] parameters)
-    {
-        /*
-         * Loop through the elements of the array of parameters, adding an "&" after each of them (except the last).
-         */
-        for(int i = 0; i < parameters.length; i = i + 1) // For arrays, length isn't a method.
-        {
+    public void post(String url, String[] parameters) {
+        for(int i = 0; i < parameters.length; i = i + 1) {
             params = params + parameters[i] + "&";
         }
         
-        /*
-         * Get the length of the parameters and take the last character off (in this case, it'll be "&").
-         */
-        int len = params.length(); // For strings, length IS a method. What in the hell...
-        params = params.substring(0, len - 1);
+        params = params.substring(0, params.length() - 1);
         
-        /*
-         * If there isn't an exception, make the connection.
-         */
-        try
-        {
-            /*
-             * Make the connection (make a URL, open the connection).
-             */
+        try {
             URL input = new URL(url);
             URLConnection connection = input.openConnection();
             connection.setDoOutput(true);
             
-            /*
-             * Make the actual request, with the parameters.
-             */
             OutputStreamWriter post = new OutputStreamWriter(connection.getOutputStream());
             post.write(params);
             post.flush();
             
-            /*
-             * Get the server's response to the post request.
-             */
             BufferedReader get = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             while ((out = get.readLine()) != null) {
                 System.out.println(out);
             }
             
-            /*
-             * Close both connections.
-             */
             post.close();
             get.close();
         }
         
-        /*
-         * If there is an exception, print the error.
-         */
-        catch(Exception e)
-        {
+        catch(Exception e) {
             e.printStackTrace();
         }
     }
@@ -179,66 +109,34 @@ public class Jack
      *                       "height=50". This will send "width=50&height=50".
      * @return               void
      */
-    public void put(String url, String[] parameters)
-    {
-        /*
-         * Loop through the elements of the array of parameters, adding an "&" after each of them (except the last).
-         */
-        for(int i = 0; i < parameters.length; i = i + 1) // For arrays, length isn't a method.
-        {
+    public void put(String url, String[] parameters) {
+        for(int i = 0; i < parameters.length; i = i + 1) {
             params = params + parameters[i] + "&";
         }
+
+        params = params.substring(0, params.length() - 1);
         
-        /*
-         * Get the length of the parameters and take the last character off (in this case, it'll be "&").
-         */
-        int len = params.length(); // For strings, length IS a method. What in the hell...
-        params = params.substring(0, len - 1);
-        
-        /*
-         * If there isn't an exception, make the connection.
-         */
-        try
-        {
-            /*
-             * Make the connection.
-             */
+        try {
             URL input = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) input.openConnection(); // Must use HttpURLConnection instead of URLConnection.
             connection.setDoOutput(true);
             
-            /*
-             * Make it a PUT request (instead of GET, the default)
-             */
             connection.setRequestMethod("PUT");
             
-            /*
-             * Make the actual request.
-             */
             OutputStreamWriter put = new OutputStreamWriter(connection.getOutputStream());
             put.write(params);
             put.flush();
             
-            /*
-             * Get the server's response to the request.
-             */
             BufferedReader get = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             while ((out = get.readLine()) != null) {
                 System.out.println(out);
             }
             
-            /*
-             * Close the connection.
-             */
             put.close();
             get.close();
         }
         
-        /*
-         * If there was an exception, catch it.
-         */
-        catch(Exception e)
-        {
+        catch(Exception e) {
             e.printStackTrace();
         }
     }
@@ -249,44 +147,23 @@ public class Jack
      * @param  url           The URL you want to make a PUT request of.
      * @return               void
      */
-    public void delete(String url)
-    {
-        /*
-         * If there wasn't an exception, try and make the connection.
-         */
-        try
-        {
-            /*
-             * Make the connection.
-             */
+    public void delete(String url) {
+        try {
             URL input = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) input.openConnection(); // Must use HttpURLConnection instead of URLConnection.
             connection.setDoOutput(true);
             
-            /*
-             * Make it a DELETE request (instead of GET, the default)
-             */
             connection.setRequestMethod("DELETE");
             
-            /*
-             * Get the server's response to the request.
-             */
             BufferedReader get = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             while ((out = get.readLine()) != null) {
                 System.out.println(out);
             }
             
-            /*
-             * Close the connection.
-             */
             get.close();
         }
         
-        /*
-         * If there was an exception, catch it.
-         */
-        catch(Exception e)
-        {
+        catch(Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,5 +1,3 @@
-package com.eturk.jack;
-
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -12,33 +10,19 @@ import org.apache.commons.codec.binary.Base64;
  * @author Ethan Turkeltaub 
  * @version 0.1.0
  */
-public class Authenticator
-{
-    /*
-     * Instance variables.
-     */
+public class Authenticator {
     private String credentials;
     
     /**
-     * Constructor.
+     * Create a basic authenticator that takes a URLConnection, a username, and a password.
      */
-    public Authenticator(URLConnection connection, String username, String password)
-    {
-        /*
-         * Concatenate.
-         */
+    public Authenticator(URLConnection connection, String username, String password) {
         credentials = username + ":" + password;
         
-        /*
-         * Encode in Base64.
-         */
         byte[] creds = credentials.getBytes();
         Base64 base64 = new Base64(true);
         credentials = base64.encodeBase64String(creds);
         
-        /*
-         * Send to server.
-         */
         connection.setRequestProperty("Authorization", "Basic " + credentials);
     }
 }
