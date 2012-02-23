@@ -1,4 +1,4 @@
-package com.eturk.jack;
+package src.com.eturk.jack;
 
 /**
  * Get OAuth working with Jack.

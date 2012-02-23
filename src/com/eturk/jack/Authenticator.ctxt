@@ -1,5 +1,0 @@
-#BlueJ class context
-comment0.params=connection\ username\ password
-comment0.target=Authenticator(java.net.URLConnection,\ java.lang.String,\ java.lang.String)
-comment0.text=\r\n\ Constructor.\r\n
-numComments=1
