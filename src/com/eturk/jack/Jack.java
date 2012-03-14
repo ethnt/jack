@@ -45,13 +45,13 @@ public class Jack {
             URL input = new URL(url);
             URLConnection connection = input.openConnection();
             
-            if(authenticated) {
+            if (authenticated) {
                 Authenticator authenticator = new Authenticator(connection, username, password);
             }
             
             BufferedReader get = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             
-            while((out = get.readLine()) != null) {
+            while ((out = get.readLine()) != null) {
                 System.out.println(out);
             }
             
@@ -72,7 +72,7 @@ public class Jack {
      * @return               
      */
     public void post(String url, String[] parameters) {
-        for(int i = 0; i < parameters.length; i = i + 1) {
+        for (int i = 0; i < parameters.length; i = i + 1) {
             params = params + parameters[i] + "&";
         }
         
@@ -110,7 +110,7 @@ public class Jack {
      * @return               void
      */
     public void put(String url, String[] parameters) {
-        for(int i = 0; i < parameters.length; i = i + 1) {
+        for (int i = 0; i < parameters.length; i = i + 1) {
             params = params + parameters[i] + "&";
         }
 
